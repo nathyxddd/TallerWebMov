@@ -1,8 +1,8 @@
 # 🌐 Taller 1: Introducción al desarrollo web/móvil
 
 ## 📌 Integrantes
-* Nathalia Olivarez Bugueño (21376495-0)
-* Alexander Rivera Velasquez (21354394-6)
+* Nathalia Olivarez Bugueño (21376495-0) nathalia.olivarez@alumnos.ucn.cl
+* Alexander Rivera Velasquez (21354394-6) alexander.rivera01@alumnos.ucn.cl
 
 ## 📖 Descripción
 Este repositorio contiene un proyecto escrito utilizando el lenguaje de programación C# con el entorno de .NET el cual posee un conjunto de controladores, entidades y un conjunto de endpoints para administrar un servicio de comercio electrónico. 
