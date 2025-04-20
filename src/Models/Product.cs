@@ -7,19 +7,24 @@ namespace TallerWebM.src.Models
 {
     public class Product
     {
-        public int Id { get; set; }
-        public required string Name { get; set; }
+        public int Id { get; set; } = 0;
+        public required string Title { get; set; } = string.Empty;
 
-        public required string Description { get; set; }
+        public int Price { get; set; } = 0;
 
-        public decimal Price { get; set; }
+        public int Stock { get; set; } = 0;
 
-        public required string Category { get; set; }
+        public required string Category { get; set; } = string.Empty;
 
-        public string []? Urls { get; set; }
+        public required string Brand { get; set; } = string.Empty;
 
-        public int Stock { get; set; }
+        public required string Description { get; set; } = string.Empty;
 
-        public required string Brand { get; set; }
+        public required string State { get; set; } = string.Empty;
+
+        public string []? Galery { get; set; } = [];
+
+        public required string LastUpdated { get; set; } = string.Empty;
+
     }
 }
