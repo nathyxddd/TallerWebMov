@@ -19,7 +19,10 @@ namespace TallerWebM.src.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasOne(u => u.shippingAddress).WithOne(s => s.User).HasForeignKey(s => s.UserId)
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.shippingAddress)
+            .WithOne(s => s.User)
+            .HasForeignKey<ShippingAddress>(s => s.UserId);
         }
     }
 }

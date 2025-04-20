@@ -12,6 +12,11 @@ try
 {
     Log.Information("starting server.");
     var builder = WebApplication.CreateBuilder(args);
+    builder.Services.AddDbContext<StoreContext>(options => {
+        options.UseSqlite("Data Source=app.db");
+        options.EnableSensitiveDataLogging();
+    });
+    
     builder.Services.AddControllers();
     builder.Host.UseSerilog((context, services, configuration) =>
     {
@@ -23,6 +28,7 @@ try
     });
 
     var app = builder.Build();
+
     app.MapControllers();
     app.Run();
 }
