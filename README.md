@@ -42,22 +42,15 @@ Clonar el repositorio utilizando git
 
 ### 4️⃣ Migraciones de Base de Datos
 
-Para manejar la base de datos, debes aplicar las migraciones necesarias con los siguientes pasos:
-
-1. **Generar las migraciones**:
-   Ejecuta el siguiente comando para crear la migración inicial:
-   ```bash
-   dotnet ef migrations add InitialCreate
-   ```
 Este comando generará un archivo de migración que define la estructura de la base de datos.
 
-2. **Aplicar las migraciones para crear la base de datos:**
+1. **Aplicar las migraciones para crear la base de datos:**
    Ejecuta el siguiente comando para aplicar la migración y crear la base de datos:
    ```bash
    dotnet ef database update
    ```
 ---
-### 5️⃣ Ejecutar el Proyecto
+### 2 Ejecutar el Proyecto
   Una vez completados los pasos anteriores, puedes iniciar el servidor localmente con el siguiente comando:
  
  ```bash

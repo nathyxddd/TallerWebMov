@@ -10,7 +10,7 @@ namespace TallerWebM.src.Models
         public int Id { get; set; } = 0;
         public required string Title { get; set; } = string.Empty;
 
-        public int Price { get; set; } = 0;
+        public decimal Price { get; set; } = 0;
 
         public int Stock { get; set; } = 0;
 
@@ -24,7 +24,7 @@ namespace TallerWebM.src.Models
 
         public string []? Galery { get; set; } = [];
 
-        public required string LastUpdated { get; set; } = string.Empty;
+        public required DateTime LastUpdated { get; set; } = DateTime.Now;
 
     }
 }
