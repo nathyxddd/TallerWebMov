@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bogus.DataSets;
 
 namespace TallerWebM.src.Models
 {
@@ -15,10 +16,10 @@ namespace TallerWebM.src.Models
 
         public required string PhoneNumber {get; set;} = string.Empty;
 
-        public required string Birthdate {get; set;} = string.Empty;
+        public required DateTime Birthdate {get; set;} = DateTime.Now;
 
         public required string Password {get; set;} = string.Empty;
 
-        public ShippingAddress shippingAddress {get; set;}
+        public required ShippingAddress shippingAddress {get; set;}
     }
 }
