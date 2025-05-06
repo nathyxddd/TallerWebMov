@@ -14,7 +14,7 @@ namespace TallerWebM.src.Data.Seeder
         private readonly DbSet<Product> products = storeContext.Products;
 
         public void Seed() {
-
+            Console.WriteLine("olis");
             if(products.Any()) {
                 return;
             }
@@ -29,12 +29,14 @@ namespace TallerWebM.src.Data.Seeder
             .RuleFor(u => u.State, f => GenerateState())
             .RuleFor(u => u.LastUpdated, f => f.Date.Recent());
 
+            Console.WriteLine("olis");
             faker.Generate(100).ForEach(u => {
                 products.Add(u);
+                
             });
 
             
-
+            storeContext.SaveChanges();
     }
 
     public string GenerateState(){

@@ -17,23 +17,47 @@ namespace TallerWebM.src.Data.Seeder
 
 
         public void Seed() {
-            
+            Console.WriteLine("ooooo");
             if(users.Any()) {
                 return;
             }
+            Console.WriteLine("oou");
 
-            var faker = new Faker<User>()
-            .RuleFor(u => u.FullName, f => f.Internet.UserName())
-            .RuleFor(u => u.Email, f => f.Internet.Email())
-            .RuleFor(u => u.Birthdate, f => f.Date.Recent())
-            .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword(f.Internet.Password()))
-            .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom());
+            //var faker = new Faker<User>()
+          //  .RuleFor(u => u.FullName, f => f.Internet.UserName())
+        //    .RuleFor(u => u.Email, f => f.Internet.Email())
+      //      .RuleFor(u => u.Birthdate, f => f.Date.Recent())
+    //        .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword("2003"))
+  //          .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom());
+//
 
-            faker.Generate(100).ForEach(u => {
-                users.Add(u);
-            });
+            //faker.Generate(100).ForEach(u => {
+              //  users.Add(u);
+            //});
 
-            
+
+            string pep = BCrypt.Net.BCrypt.HashPassword("2003");
+            Console.WriteLine(pep);
+
+            User user = new User{
+                FullName = "zaex",
+                Email = "zaex@gmail.com",
+                PhoneNumber = "987878787",
+                Birthdate = new DateTime(),
+                Password = pep,
+                shippingAddress = new ShippingAddress{
+                    Id = 20,
+                    Street = "Antofa",
+                    NumberStreet = 200,
+                    Commune = "Antofagasta",
+                    Region = "Antofagasta",
+                    ZipCode = "3232"
+                }
+            };
+
+            users.Add(user);
+            storeContext.SaveChanges();
+            Console.WriteLine("pppp");
 
         }
 
