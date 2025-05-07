@@ -18,30 +18,25 @@ namespace TallerWebM.src.DTOs.Auth
     public class AuthenticationService : IAuthenticateServices
     {
         private readonly StoreContext _context;
+        private readonly DbSet<User> users;
 
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
         public AuthenticationService(StoreContext context)
         {
             _context = context;
+            users = _context.Users;
         }
 
 
         public string LoginUser(string email, string password){
-            Console.WriteLine("zaex");
-            Console.WriteLine(email);
-            Console.WriteLine("2003");
-            Console.WriteLine("tatatatata" + password);
+
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
-
-
 
             if(user == null)
             {
                 throw new Exception("Not found");
             }
-            Console.WriteLine(user.Password);
-            Console.WriteLine(BCrypt.Net.BCrypt.HashPassword(password));
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
@@ -50,9 +45,7 @@ namespace TallerWebM.src.DTOs.Auth
                 throw new Exception("Password incorrect");
             }
 
-            var token = GenerateToken(user);
-
-            return token;
+            return GenerateToken(user);
         }
 
         public string GenerateToken(User user){

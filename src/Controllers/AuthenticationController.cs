@@ -23,12 +23,10 @@ namespace TallerWebM.src.Controllers
     {
 
         [HttpPost]
-        [Route("/api/authenticate")]
-        public ActionResult<string> Authenticate([FromBody] Credentials credentials)
+        [Route("/api/login")]
+        public ActionResult<string> Login([FromBody] Credentials credentials)
         {
-            Console.WriteLine("ola");
             try{
-                Console.WriteLine("ola2");
                 string token = authenticationService.LoginUser(credentials.Email, credentials.Password);
                 return Ok(token);
 
@@ -36,9 +34,14 @@ namespace TallerWebM.src.Controllers
                 if(e.Message == "Not found"){
                     return NotFound("No encontrado");
                 }
-                return Unauthorized("Contraseña incorrecta");
+                if(e.Message == "Password Incorrect"){
+                    return Unauthorized("Contraseña incorrecta");
+                }
+                return BadRequest(e.Message);
+                
             }
 
         }
+
     }
 }

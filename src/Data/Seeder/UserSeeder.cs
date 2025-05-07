@@ -15,36 +15,29 @@ namespace TallerWebM.src.Data.Seeder
         private readonly Random _random = new Random();
         private readonly DbSet<User> users = storeContext.Users;
 
+        private readonly DbSet<Role> roles = storeContext.Roles;
+
 
         public void Seed() {
-            Console.WriteLine("ooooo");
             if(users.Any()) {
                 return;
             }
-            Console.WriteLine("oou");
 
-            //var faker = new Faker<User>()
-          //  .RuleFor(u => u.FullName, f => f.Internet.UserName())
-        //    .RuleFor(u => u.Email, f => f.Internet.Email())
-      //      .RuleFor(u => u.Birthdate, f => f.Date.Recent())
-    //        .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword("2003"))
-  //          .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom());
-//
+            roles.Add(new Role {
+              Name = "User"
+            });
 
-            //faker.Generate(100).ForEach(u => {
-              //  users.Add(u);
-            //});
-
-
-            string pep = BCrypt.Net.BCrypt.HashPassword("2003");
-            Console.WriteLine(pep);
+            roles.Add(new Role{
+                Name = "Admin"
+            });
 
             User user = new User{
                 FullName = "zaex",
                 Email = "zaex@gmail.com",
                 PhoneNumber = "987878787",
-                Birthdate = new DateTime(),
-                Password = pep,
+                Birthdate = "30-03-2004",
+                RoleId = 1,
+                Password = BCrypt.Net.BCrypt.HashPassword("hola"),
                 shippingAddress = new ShippingAddress{
                     Id = 20,
                     Street = "Antofa",
@@ -54,11 +47,21 @@ namespace TallerWebM.src.Data.Seeder
                     ZipCode = "3232"
                 }
             };
-
+        
             users.Add(user);
-            storeContext.SaveChanges();
-            Console.WriteLine("pppp");
 
+            var faker = new Faker<User>()
+            .RuleFor(u => u.FullName, f => f.Internet.UserName())
+            .RuleFor(u => u.Email, f => f.Internet.Email())
+            .RuleFor(u => u.Birthdate, f => "")
+            .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword("Nathalia123"))
+            .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom())
+            .RuleFor(u => u.RoleId, 0);
+
+            faker.Generate(100).ForEach(u => {
+                users.Add(u);
+            });
+            storeContext.SaveChanges();
         }
 
         public string GeneratePhoneRandom(){
@@ -69,6 +72,6 @@ namespace TallerWebM.src.Data.Seeder
                 phone += s;
             }
             return phone;
-        } 
+        }
     }
 }
