@@ -36,6 +36,7 @@ namespace TallerWebM.src.Controllers
                 if(e.Message == "Password Incorrect"){
                     return Unauthorized("Contraseña incorrecta");
                 }
+                Console.WriteLine("Prueba");
                 return BadRequest(e.Message);
                 
             }
