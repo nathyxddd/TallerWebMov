@@ -13,12 +13,13 @@ using Microsoft.AspNetCore.Authentication;
 using TallerWebM.src.Interfaces.Auth;
 
 
-namespace TallerWebM.src.DTOs.Auth
+namespace TallerWebM.src.Services.Implements
 {
     public class AuthenticationService : IAuthenticateServices
     {
         private readonly StoreContext _context;
         private readonly DbSet<User> users;
+        private readonly DbSet<Role> roles;
 
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
@@ -32,6 +33,7 @@ namespace TallerWebM.src.DTOs.Auth
         public string LoginUser(string email, string password){
 
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            var role = roles.FirstOrDefault(r => r.Id == user.Id);
 
             if(user == null)
             {
@@ -45,14 +47,18 @@ namespace TallerWebM.src.DTOs.Auth
                 throw new Exception("Password incorrect");
             }
 
-            return GenerateToken(user);
+            return GenerateToken(user, id);
         }
 
-        public string GenerateToken(User user){
+        public string GenerateToken(User user, string role) {
+
+
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.FullName),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("zaex"));
@@ -71,10 +77,13 @@ namespace TallerWebM.src.DTOs.Auth
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
-        public string RegisterUser(){
+        public string RegisterUser() {
             var email = userDto.Email;
             var password = userDto.Password;
             var repeatPassword = userDto.RepeatPassword;
+        
+           
+
 
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
 
