@@ -20,6 +20,7 @@ namespace TallerWebM.src.Services.Implements
         private readonly StoreContext _context;
         private readonly DbSet<User> users;
         private readonly DbSet<Role> roles;
+        private readonly IConfiguration configuration;
 
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
@@ -61,7 +62,8 @@ namespace TallerWebM.src.Services.Implements
                 new Claim(ClaimTypes.Role, role)
             };
 
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("zaex"));
+            var contentToken = configuration["Jwt:Secret"];
+            var authSigningKey = new SymmetricSecurityKey(contentToken));
             DateTime? expiration = DateTime.UtcNow.AddHours(1);
             var credentials = new SigningCredentials(
                 authSigningKey,
