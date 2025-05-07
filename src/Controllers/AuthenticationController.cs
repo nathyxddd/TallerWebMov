@@ -8,8 +8,7 @@ using TallerWebM.src.Data;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Authentication;
 using TallerWebM.src.DTOs;
-using TallerWebM.src.DTOs.Auth;
-using TallerWebM.src.Interfaces.Auth;
+using TallerWebM.src.Services.Interfaces.Auth;
 
 namespace TallerWebM.src.Controllers
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Bogus;
+using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.Models;
 
@@ -53,7 +54,7 @@ namespace TallerWebM.src.Data.Seeder
             var faker = new Faker<User>()
             .RuleFor(u => u.FullName, f => f.Internet.UserName())
             .RuleFor(u => u.Email, f => f.Internet.Email())
-            .RuleFor(u => u.Birthdate, f => "")
+            .RuleFor(u => u.Birthdate, f => DateTime.Now)
             .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword("Nathalia123"))
             .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom())
             .RuleFor(u => u.RoleId, 0);

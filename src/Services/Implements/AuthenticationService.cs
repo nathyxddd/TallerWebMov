@@ -10,9 +10,8 @@ using System.Text;
 using TallerWebM.src.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
-using TallerWebM.src.Interfaces.Auth;
-
-
+using TallerWebM.src.Services.Interfaces.Auth;
+using Microsoft.EntityFrameworkCore;
 namespace TallerWebM.src.Services.Implements
 {
     public class AuthenticationService : IAuthenticateServices
@@ -48,7 +47,7 @@ namespace TallerWebM.src.Services.Implements
                 throw new Exception("Password incorrect");
             }
 
-            return GenerateToken(user, id);
+            return GenerateToken(user, role.Name);
         }
 
         public string GenerateToken(User user, string role) {
@@ -63,7 +62,7 @@ namespace TallerWebM.src.Services.Implements
             };
 
             var contentToken = configuration["Jwt:Secret"];
-            var authSigningKey = new SymmetricSecurityKey(contentToken));
+            var authSigningKey = new SymmetricSecurityKey());
             DateTime? expiration = DateTime.UtcNow.AddHours(1);
             var credentials = new SigningCredentials(
                 authSigningKey,
@@ -79,7 +78,7 @@ namespace TallerWebM.src.Services.Implements
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
-        public string RegisterUser() {
+        public string RegisterUser(UserDto userDto) {
             var email = userDto.Email;
             var password = userDto.Password;
             var repeatPassword = userDto.RepeatPassword;
@@ -108,7 +107,11 @@ namespace TallerWebM.src.Services.Implements
             users.Add(creationUser);
             _context.SaveChanges();
             return userDto;
+        }
 
+        public UserDto RegisterUser(UserDto userDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

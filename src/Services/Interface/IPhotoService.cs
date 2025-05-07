@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TallerWebM.src.Services.Interfaces.Auth
+namespace TallerWebM.src.Services.Interface
 {
-    public interface ServiceProduct
+    public class IPhotoService
     {
         
     }
