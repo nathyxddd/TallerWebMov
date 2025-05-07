@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TallerWebM.src.Controllers
+namespace TallerWebM.src.Services.Interfaces.Auth
 {
-    public class ShippingAddressController
+    public interface ServiceShippingAddres
     {
         
     }

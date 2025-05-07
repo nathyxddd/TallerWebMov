@@ -9,17 +9,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TallerWebM.src.Data
 {
-    public class StoreContext(DbContextOptions options): DbContext(options)
+    public class StoreContext : DbContext
     {
+        public class StoreContext(DbContextOptions options): base(options)
+        {}
+
+        public StoreContext(){}
+        
         public required  DbSet<Product> Products {get; set;}
 
         public required DbSet<User> Users {get; set;}
+
+        public required DbSet<Role> Roles = {get; set}
 
         public required DbSet<ShippingAddress> ShippingAddresses {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasOne(u => u.shippingAddress).WithOne(s => s.User).HasForeignKey(s => s.UserId)
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.shippingAddress)
+            .WithOne(s => s.User)
+            .HasForeignKey<ShippingAddress>(s => s.UserId);
         }
     }
+
 }
+    
