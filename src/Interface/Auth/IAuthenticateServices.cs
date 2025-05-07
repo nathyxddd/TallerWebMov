@@ -8,6 +8,10 @@ namespace TallerWebM.src.Interfaces.Auth
     public interface IAuthenticateServices
     {
         public string LoginUser(string email, string password);
+
+        public UserDto RegisterUser(UserDto userDto);
+
+
         
     }
 }

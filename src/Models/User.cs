@@ -20,6 +20,8 @@ namespace TallerWebM.src.Models
 
         public required string Password {get; set;} = string.Empty;
 
+        public int RoleId {get; set; } = 0;
+
         public ShippingAddress shippingAddress {get; set;}
     }
 }

@@ -71,8 +71,33 @@ namespace TallerWebM.src.DTOs.Auth
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
-        //public string RegisterUser(){
+        public string RegisterUser(){
+            var email = userDto.Email;
+            var password = userDto.Password;
+            var repeatPassword = userDto.RepeatPassword;
 
-        //}
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+
+            if(user != null) {
+                throw new Exception("user_exists");
+            }
+
+            if(password != repeatPassword) {
+                throw new Exception("password_not_equals");
+            }
+
+            var creationUser = new User {
+                FullName = userDto.FullName,
+                Email = userDto.Email,
+                PhoneNumber = userDto.PhoneNumber,
+                Birthdate = userDto.Birthdate,
+                Password = BCrypt.Net.BCrypt.HashPassword(password)
+            };
+
+            users.Add(creationUser);
+            _context.SaveChanges();
+            return userDto;
+
+        }
     }
 }
