@@ -11,7 +11,7 @@ namespace TallerWebM.src.Services.Interface
         
         void AddProduct(Product product);
 
-        void RemoveProduct(int productId);
+        Product RemoveProduct(int productId);
 
         void RemoveProductName(string name);
 

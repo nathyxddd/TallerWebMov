@@ -38,13 +38,14 @@ namespace TallerWebM.src.Services.Implements
             .First();
         }
 
-        public void RemoveProduct(int productId)
+        public Product RemoveProduct(int productId)
         {
             var productSearched = GetProductId(productId);
             if(productSearched == null) {
                 throw new Exception("not_exists");
             }
             products.Remove(productSearched);
+            return productSearched;
         }
 
         public void RemoveProductName(string name)
