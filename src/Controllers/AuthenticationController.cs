@@ -13,30 +13,52 @@ using TallerWebM.src.Services.Interfaces.Auth;
 namespace TallerWebM.src.Controllers
 {
     
-
+    // Se define la ruta basa del controlador.
     [Route("api/[controller]")]
+    //Responde a las solicitudes API comportandose como un controlador REST.
     [ApiController]
 
-
+    ///<summary>
+    /// Controlador del Authentication, encargado de manejar la autenticación de usuarios, implementa la interfaz IAuthenticate Services.
+    /// </summary>
     public class AuthenticationController(IAuthenticateServices authenticationService) : ControllerBase
     {
 
+        /// <summary
+        /// Método HTTP POST para que un usuario pueda iniciar sesión utilizando su correo y contraseña.
+        /// </summary>
+        /// <param name="credentials"> Objeto que contiene el correo electrónico y la contraseña del usuario. </param> 
+        /// <returns> Devuelve un token JWT si la autenticación es exitosa.
+        /// Retorna un cógido 404 si el usuario no existe.
+        /// Retorna un código 401 si la contraseña es incorrecta.
+        /// Retorna un código 400 si ocurre otro error inesperado.
+        /// </return>
         [HttpPost]
         [Route("/api/login")]
         public ActionResult<string> Login([FromBody] Credentials credentials)
         {
             try{
+                // Se intenta autenticar al usuario con el correo y contraseña enviados en el cuerpo de la solicitud.
                 string token = authenticationService.LoginUser(credentials.Email, credentials.Password);
+
+                // Si la autenticación fue exitosa, se devuelve un token con código 200: la solicitud ha sido procesada correctamente.
                 return Ok(token);
 
             }catch(Exception e){
+                // Si el servicio lanza una excepción con mensaje "Not found", significa que el usuario no existe.
                 if(e.Message == "Not found"){
+                    // Se devuelve el código 404: Recurso no encontrado
                     return NotFound("No encontrado");
                 }
+
+                // Si el mensaje es "Password Incorrect", la contraseña no coinciden con la del usuario.
                 if(e.Message == "Password Incorrect"){
+                    // Se devuelve el código 401: No autorizado por información incorrecta
                     return Unauthorized("Contraseña incorrecta");
                 }
                 Console.WriteLine("Prueba");
+
+                // Se devuelve un mensaje de error 400: Solicitud incorrecta
                 return BadRequest(e.Message);
                 
             }
