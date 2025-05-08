@@ -30,12 +30,17 @@ namespace TallerWebM.src.Models
         /// <summary>
         /// Fecha de nacimiento del usuario (obligatoria).
         /// </summary>
-        public required string Birthdate {get; set;} = string.Empty;
+        public required DateTime Birthdate {get; set;} = DateTime.Now;
 
         
         /// <summary>
         /// Contraseña del usuario (obligatoria).
         /// </summary>
         public required string Password {get; set;} = string.Empty;  
+
+        /// <summary>
+        /// Contraseña repetida del usuario (obligatoria).
+        /// </summary>
+        public required string RepeatPassword {get; set;} = string.Empty;
     }
 }
