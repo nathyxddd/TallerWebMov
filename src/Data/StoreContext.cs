@@ -11,16 +11,13 @@ namespace TallerWebM.src.Data
 {
     public class StoreContext : DbContext
     {
-        public class StoreContext(DbContextOptions options): base(options)
-        {}
+        public StoreContext(DbContextOptions options): base(options) {}
 
         public StoreContext(){}
         
         public required  DbSet<Product> Products {get; set;}
 
         public required DbSet<User> Users {get; set;}
-
-        public required DbSet<Role> Roles = {get; set}
 
         public required DbSet<ShippingAddress> ShippingAddresses {get; set;}
 
