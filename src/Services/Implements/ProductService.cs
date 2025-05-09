@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.Data;
+using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
 using TallerWebM.src.Services.Interface;
 
@@ -21,6 +22,8 @@ namespace TallerWebM.src.Services.Implements
         // Tabla de productos, se accede como DbSet<Product>.
         private readonly DbSet<Product> products;
 
+        private readonly ProductCreationMapper productCreationMapper;
+
         // <summary>
         // Controlador que inicializa el servicio con el StoreContext y la tabla de productos.
         // </summary>
@@ -36,13 +39,16 @@ namespace TallerWebM.src.Services.Implements
         // Se agrega un nuevo producto a la tabla de productos y se guardan los cambios.
         // </summary>
         // <param name="product"> El producto que se desea agregar. </param>
-        public void AddProduct(Product product)
+        public ProductDto AddProduct(Product product)
         {
             // Se agrega el product al DbSet.
             products.Add(product);
 
+            var dto = productCreationMapper.Mapper(product);
+
             // Se guardan los cambios en la base de datos.
             storeContext.SaveChanges();
+            return dto;
         }
 
         // <summary>
@@ -50,10 +56,14 @@ namespace TallerWebM.src.Services.Implements
         // </summary>
         // <param name="id"> El ID del producto. </param>
         // <returns> El producto si se encuentra; de lo contrario, null. </returns>
-        public Product? GetProductId(int id)
+        public ProductDto? GetProductId(int id)
         {
             // Usa EF Core para buscar.
-           return products.Find(id);
+            var productFind = products.Find(id);
+            if(productFind == null) {
+                return null;
+            }
+           return productCreationMapper.Mapper(productFind);
         }
 
         // <summary>
@@ -61,11 +71,17 @@ namespace TallerWebM.src.Services.Implements
         // </summary>
         // <param name = "product"> El nombre del producto. </param>
         // <returns>  El producto si se encuentra; de lo contrario, null. </returns>
-        public Product? GetProductName(string name)
+        public ProductDto? GetProductName(string name)
         {
             // Filtra productos por nombre y retorna el primero que coincide.
-            return products.Where(p => p.Title == name)
+            var productFind = products.Where(p => p.Title == name)
             .First();
+
+            if(productFind == null) {
+                return null;
+            }
+
+            return productCreationMapper.Mapper(productFind);
         }
 
         // <summary>
@@ -76,7 +92,7 @@ namespace TallerWebM.src.Services.Implements
         public Product RemoveProduct(int productId)
         {
             // Busca el producto por ID.
-            var productSearched = GetProductId(productId);
+            var productSearched = products.Find(productId);
 
             // Si no existe, lanza una excepción.
             if(productSearched == null) {
@@ -97,7 +113,8 @@ namespace TallerWebM.src.Services.Implements
         public void RemoveProductName(string name)
         {
             // Buscar por nombre.
-            var productSearched = GetProductName(name);
+            var productSearched = products.Where(p => p.Title == name)
+            .First();
 
             // Si no se encuentra, lanza un error.
             if(productSearched == null) {

@@ -1,4 +1,3 @@
-using System.Composition;
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
 
@@ -26,7 +25,7 @@ public class ProductCreationMapper : IProductCreationMapper
                 Stock = product.Stock,
                 Category = product.Category,
                 Brand = product.Brand,
-                Description = product.Description, 
+                Description = product.Description,
                 State = product.State
         };
     }
