@@ -18,14 +18,6 @@ try
     // Se crea un nuevo objeto WebApplication para configurar el servidor.
     var builder = WebApplication.CreateBuilder(args);
 
-    // Se configura el contexto de la base de datos utilizando SQLite.
-    builder.Services.AddDbContext<StoreContext>(options => {
-        // Se define que la base de datos se almacenará en un archivo SQLite llamado app.db.
-        options.UseSqlite("Data Source=app.db");
-        // Se habilita el registro de datos sensibles.
-        options.EnableSensitiveDataLogging();
-    });
-
     // Se registran las dependencias necesarias para la inserción de datos.
     // Se inyecta la dependencia de UserSeeder en la aplicación.
     builder.Services.AddScoped<IUserSeeder,UserSeeder>();
