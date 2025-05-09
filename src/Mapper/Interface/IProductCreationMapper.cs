@@ -5,4 +5,6 @@ public interface IProductCreationMapper {
 
     public Product Mapper(ProductDto productDto);
 
+    public ProductDto Mapper(Product product);
+
 }

@@ -18,4 +18,17 @@ public class ProductCreationMapper : IProductCreationMapper
         };
     }
 
+    public ProductDto Mapper(Product product)
+    {
+        return new ProductDto {
+                Title = product.Title,
+                Price = product.Price,
+                Stock = product.Stock,
+                Category = product.Category,
+                Brand = product.Brand,
+                Description = product.Description, 
+                State = product.State
+        };
+    }
+
 }

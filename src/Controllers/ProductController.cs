@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,11 @@ namespace TallerWebM.src.Controllers
         [HttpPost]
         [Route("/product/add")]
         public ActionResult<ProductDto> Add([FromBody] ProductDto productDto) {
-            return StatusCode(501, "Método no implementado");
+            try {
+                return productService.AddProduct(productDto);
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
         }
 
         /// <summary>
