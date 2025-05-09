@@ -59,7 +59,7 @@ namespace TallerWebM.src.Models
         /// <summary>
         /// Fecha de la última actualización del producto (obligatoria).
         /// </summary>
-        public required DateTime LastUpdated { get; set; } = DateTime.Now;
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
 
     }
 }
