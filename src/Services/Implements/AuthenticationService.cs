@@ -92,6 +92,7 @@ namespace TallerWebM.src.Services.Implements
 
         public string GenerateToken(User user, string role) {
             // Afirmaciones que se incluirán en el token.
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.FullName),

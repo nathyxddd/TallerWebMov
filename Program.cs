@@ -6,6 +6,8 @@ using TallerWebM.src.Data;
 using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.Services.Interfaces.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 // Configura un logger utilizando Serilog
 Log.Logger = new LoggerConfiguration()
@@ -32,13 +34,10 @@ try
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
     .AddJwtBearer(options => {
-        options.RequireHttpsMetadata = true;
-        options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"]
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
         };
     });
 
