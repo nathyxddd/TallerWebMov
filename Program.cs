@@ -2,6 +2,8 @@ using Serilog;
 using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.Data;
 using TallerWebM.src.Data.Seeder;
+using TallerWebM.src.Services.Interface;
+using TallerWebM.src.Services.Implements;
 
 // Configura un logger utilizando Serilog
 Log.Logger = new LoggerConfiguration()
@@ -30,6 +32,10 @@ try
 
     // Se inyecta la dependencia de ProductSeeder en la aplicación.
     builder.Services.AddScoped<IProductSeeder,ProductSeeder>();
+
+    builder.Services.AddScoped<IProductCreationMapper, ProductCreationMapper>();
+
+    builder.Services.AddScoped<IProductService, ProductService>();
 
     // Se registran los controladores de la aplicación.
     builder.Services.AddControllers();

@@ -16,7 +16,7 @@ namespace TallerWebM.src.Services.Interface
         // Se agrega un nuevo producto a la tabla de productos y se guardan los cambios.
         // </summary>
         // <param name="product"> El producto que se desea agregar. </param>
-        ProductDto AddProduct(ProductDto productDto);
+        ProductDto AddProduct(Product product);
 
         // <summary>
         // Se elimina un producto por su ID.

@@ -22,7 +22,7 @@ namespace TallerWebM.src.Services.Implements
         // Tabla de productos, se accede como DbSet<Product>.
         private readonly DbSet<Product> products;
 
-        private readonly ProductCreationMapper productCreationMapper;
+        private readonly IProductCreationMapper productCreationMapper;
 
         // <summary>
         // Controlador que inicializa el servicio con el StoreContext y la tabla de productos.
@@ -30,9 +30,10 @@ namespace TallerWebM.src.Services.Implements
         // <param name="storeContext"> El contexto de la base de datos. </param>
         // <param name="products"> La tabla de productos. </param>
         public ProductService(StoreContext storeContext,
-        DbSet<Product> products) {
+        IProductCreationMapper productCreationMapper) {
             this.storeContext = storeContext;
-            this.products = products;
+            this.products = storeContext.Products;
+            this.productCreationMapper = productCreationMapper;
         }
 
         // <summary>

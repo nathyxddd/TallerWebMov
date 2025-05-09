@@ -40,9 +40,9 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto agregado. </returns>
         [HttpPost]
         [Route("/product/add")]
-        public ActionResult<ProductDto> Add([FromBody] ProductDto productDto) {
+        public ActionResult<ProductDto> Add([FromBody] Product product) {
             try {
-                return productService.AddProduct(productDto);
+                return productService.AddProduct(product);
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
@@ -54,7 +54,7 @@ namespace TallerWebM.src.Controllers
         /// <param name="id">ID del producto que se desea eliminar. </param>
         /// <returns> El producto eliminado si existe, o un mensaje de error si no se encuentra. </returns>
         [HttpDelete]
-        [Route("/product/remove")]
+        [Route("/product/remove/{id}")]
         public ActionResult<ProductDto> Remove(int id) {
             try {
                 // Se llama al servicio para eliminar el producto.
@@ -72,6 +72,7 @@ namespace TallerWebM.src.Controllers
         /// <param name="id"> ID del producto que se desea obtener. </param>
         /// <returns> El producto encontrado o un mensaje de error si no existe. </returns>
         [HttpGet]
+        [Route("/product/get/{id}")]
         public ActionResult<ProductDto> Get(int id) {
             try
             {
