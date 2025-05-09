@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace TallerWebM.src.DTOs
 {
@@ -19,11 +18,13 @@ namespace TallerWebM.src.DTOs
         /// <summary>
         /// Precio del producto (por defecto 0).
         /// </summary>
+        [Range(1, int.MaxValue, ErrorMessage = "El precio debe ser un valor positivo")]
         public decimal Price { get; set; } = 0;
 
         /// <summary>
         /// Cantidad de stock disponible (por defecto 0).
         /// </summary>
+        [Range(1, int.MaxValue, ErrorMessage = "El stock debe ser un valor positivo")]
         public int Stock { get; set; } = 0;
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace TallerWebM.src.DTOs
         /// <summary>
         /// Estado del producto, puede ser "nuevo" o "usado" (obligatorio).
         /// </summary>
+        [RegularExpression(@"^nuevo|usado")]
         public required string State { get; set; } = string.Empty;
 
     }
