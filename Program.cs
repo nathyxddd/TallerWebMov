@@ -78,6 +78,11 @@ try
 catch (Exception ex)
 {
     // Se registra un mensaje de error fatal si el servidor termina inesperadamente.
+
+    if(ex is HostAbortedException) {
+        return;
+    }
+
     Log.Fatal(ex, "server terminated unexpectedly");
 }
 finally
