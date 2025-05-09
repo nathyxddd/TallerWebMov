@@ -34,7 +34,7 @@ namespace TallerWebM.src.Services.Implements
         private readonly IUserCreationMapper userCreationMappers;
 
         // Configuración para acceder a claves secretas.
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
 
         // Utilidad para generar y leer tokens JWT.
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
@@ -44,10 +44,13 @@ namespace TallerWebM.src.Services.Implements
         /// Constructor que recibe el contexto y lo asigna.
         /// </summary>
         /// <param name="context"></param>
-        public AuthenticationService(StoreContext context)
+        public AuthenticationService(StoreContext context, 
+        IConfiguration configuration)
         {
             _context = context;
             users = _context.Users;
+            roles = _context.Roles;
+            _configuration = configuration;
         }
 
         // <summary>
@@ -61,14 +64,16 @@ namespace TallerWebM.src.Services.Implements
             // Se busca el usuario por su email.
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
 
-            // Se obtiene el rol por el ID del usuario
-            var role = roles.FirstOrDefault(r => r.Id == user.Id);
-
-            // Si el usuario no existe, se lanza un mensaje de error.
+             // Si el usuario no existe, se lanza un mensaje de error.
             if(user == null)
             {
                 throw new Exception("Not found");
             }
+
+            // Se obtiene el rol por el ID del usuario
+            var role = roles.FirstOrDefault(r => r.Id == user.RoleId);
+            Console.WriteLine(role.Name);
+
 
             // Se verifica si la contraseña ingresada coincide con la almacenada.
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
@@ -78,6 +83,8 @@ namespace TallerWebM.src.Services.Implements
             {
                 throw new Exception("Password incorrect");
             }
+
+
 
             // Se genera el token JWT para el usuario.
             return GenerateToken(user, role.Name);
@@ -93,7 +100,7 @@ namespace TallerWebM.src.Services.Implements
             };
 
             // Se obtiene la clave secreta desde appsettings.json.
-            var contentToken = configuration["Jwt:Secret"];
+            var contentToken = _configuration["Jwt:Secret"];
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(contentToken));
 
             // Tiempo de expiración del token.

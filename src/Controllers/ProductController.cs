@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +74,7 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto encontrado o un mensaje de error si no existe. </returns>
         [HttpGet]
         [Route("/product/get/{id}")]
+        [Authorize]
         public ActionResult<ProductDto> Get(int id) {
             try
             {

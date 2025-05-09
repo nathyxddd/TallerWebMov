@@ -10,7 +10,7 @@ namespace TallerWebM.src.Models
     /// <summary>
     /// Clase que representa a un usuario.
     /// </summary>
-    public class User
+    public class User 
     {
         /// <summary>
         /// ID del usuario (por defecto 0).
@@ -51,5 +51,6 @@ namespace TallerWebM.src.Models
         /// Dirección de envío asociada al usuario.
         /// </summary>
         public ShippingAddress shippingAddress {get; set;}
+
     }
 }

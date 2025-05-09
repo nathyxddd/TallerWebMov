@@ -56,8 +56,6 @@ namespace TallerWebM.src.Controllers
                     // Se devuelve el código 401: No autorizado por información incorrecta
                     return Unauthorized("Contraseña incorrecta");
                 }
-                Console.WriteLine("Prueba");
-
                 // Se devuelve un mensaje de error 400: Solicitud incorrecta
                 return BadRequest(e.Message);
 
