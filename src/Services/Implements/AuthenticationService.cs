@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using TallerWebM.src.Services.Interfaces.Auth;
 using Microsoft.EntityFrameworkCore;
+using TallerWebM.src.Mapper;
+using System.Data;
 namespace TallerWebM.src.Services.Implements
 {
     /// <summary>
@@ -27,6 +29,8 @@ namespace TallerWebM.src.Services.Implements
 
         // Acceso a las tabla Roles.
         private readonly DbSet<Role> roles;
+
+        private readonly IUserCreationMapper userCreationMappers;
 
         // Configuración para acceder a claves secretas.
         private readonly IConfiguration configuration;
@@ -45,18 +49,18 @@ namespace TallerWebM.src.Services.Implements
             users = _context.Users;
         }
 
-        // <summary> 
+        // <summary>
         // Se inicia sesión de un usuario validando sus credenciales.
-        // </summary> 
+        // </summary>
         // <param name = "email"> El correo electrónico del usuario. </param>
         // <param name = "password"> La contraseña del usuario. </param>
         // <returns>  Token JWT si las credenciales son válidas. </returns>
         public string LoginUser(string email, string password){
-            
+
             // Se busca el usuario por su email.
             var user = _context.Users.FirstOrDefault(u => u.Email == email);
 
-            // Se obtiene el rol por el ID del usuario 
+            // Se obtiene el rol por el ID del usuario
             var role = roles.FirstOrDefault(r => r.Id == user.Id);
 
             // Si el usuario no existe, se lanza un mensaje de error.
@@ -65,7 +69,7 @@ namespace TallerWebM.src.Services.Implements
                 throw new Exception("Not found");
             }
 
-            // Se verifica si la contraseña ingresada coincide con la almacenada. 
+            // Se verifica si la contraseña ingresada coincide con la almacenada.
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
             // Si la contraseña no es correcta.
@@ -87,7 +91,7 @@ namespace TallerWebM.src.Services.Implements
                 new Claim(ClaimTypes.Role, role)
             };
 
-            // Se obtiene la clave secreta desde appsettings.json. 
+            // Se obtiene la clave secreta desde appsettings.json.
             var contentToken = configuration["Jwt:Secret"];
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(contentToken));
 
@@ -111,9 +115,9 @@ namespace TallerWebM.src.Services.Implements
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
-        // <summary> 
+        // <summary>
         // Se registra un nuevo usuario en el sistema.
-        // </summary> 
+        // </summary>
         // <param name = "UserDto"> Los datos del usuario a registrar. </param>
         // <returns>  El User </returns>
         public UserDto RegisterUser(UserDto userDto) {
@@ -133,20 +137,16 @@ namespace TallerWebM.src.Services.Implements
             }
 
             // Se crea el nuevo usuario.
-            var creationUser = new User {
-                FullName = userDto.FullName,
-                Email = userDto.Email,
-                PhoneNumber = userDto.PhoneNumber,
-                Birthdate = userDto.Birthdate,
-                Password = BCrypt.Net.BCrypt.HashPassword(password)
-            };
+            var user1 = userCreationMappers.Mapper(userDto);
+
 
             // Se agrega el usuario a la base de datos.
-            users.Add(creationUser);
+            users.Add(user1);
             _context.SaveChanges();
 
             // Retorna el usuario.
             return userDto;
         }
+
     }
 }

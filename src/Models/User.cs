@@ -11,7 +11,7 @@ namespace TallerWebM.src.Models
     /// Clase que representa a un usuario.
     /// </summary>
     public class User
-    {   
+    {
         /// <summary>
         /// ID del usuario (por defecto 0).
         /// </summary>
@@ -41,9 +41,9 @@ namespace TallerWebM.src.Models
         /// Contraseña del usuario (obligatoria).
         /// </summary>
         public required string Password {get; set;} = string.Empty;
- 
+
         /// <summary>
-        /// ID del rol del usuario (por defecto 0). 
+        /// ID del rol del usuario (por defecto 0).
         /// </summary>
         public int RoleId {get; set; } = 0;
 

@@ -11,20 +11,20 @@ namespace TallerWebM.src.Services.Interfaces.Auth
     // </summary>
     public interface IAuthenticateServices
     {
-        // <summary> 
+        // <summary>
         // Se inicia sesión de un usuario validando sus credenciales.
-        // </summary> 
+        // </summary>
         // <param name = "email"> El correo electrónico del usuario. </param>
         // <param name = "password"> La contraseña del usuario. </param>
         // <returns>  Token JWT si las credenciales son válidas. </returns>
         public string LoginUser(string email, string password);
 
-        // <summary> 
+        // <summary>
         // Se registra un nuevo usuario en el sistema.
-        // </summary> 
+        // </summary>
         // <param name = "UserDto"> Los datos del usuario a registrar. </param>
         // <returns>  Los datos del usuario regsitrado. </returns>
         public UserDto RegisterUser(UserDto userDto);
-        
+
     }
 }

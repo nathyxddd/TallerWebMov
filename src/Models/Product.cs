@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TallerWebM.src.Models
 {
-    
+
     /// <summary>
     /// Clase que representa un producto dentro del sistema.
     /// </summary>
@@ -25,7 +25,7 @@ namespace TallerWebM.src.Models
         /// Precio del producto (por defecto 0).
         /// </summary>
         public decimal Price { get; set; } = 0;
-        
+
         /// <summary>
         /// Cantidad de stock disponible (por defecto 0).
         /// </summary>

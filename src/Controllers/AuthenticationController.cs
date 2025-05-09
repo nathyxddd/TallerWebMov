@@ -12,7 +12,7 @@ using TallerWebM.src.Services.Interfaces.Auth;
 
 namespace TallerWebM.src.Controllers
 {
-    
+
     // Se define la ruta basa del controlador.
     [Route("api/[controller]")]
     //Responde a las solicitudes API comportandose como un controlador REST.
@@ -60,12 +60,38 @@ namespace TallerWebM.src.Controllers
 
                 // Se devuelve un mensaje de error 400: Solicitud incorrecta
                 return BadRequest(e.Message);
-                
+
             }
 
         }
 
-        
 
+        /// <summary>
+        /// Método HTTP POST para que un usuario se pueda registrar a través de una solicutud.
+        /// </summary>
+        /// <param name="userDto"> Objeto que contiene los datos del usuario a registrar. </param>
+        /// <returns> El código 200 si el registro fue exitoso. </returns>
+        [HttpPost]
+        [Route("/api/register")]
+        public ActionResult<UserDto> Register([FromBody] UserDto userDto)
+        {
+            try{
+                // Intenta registrar al usuario utilizando el servicio de autenticación.
+                var user = authenticationService.RegisterUser(userDto);
+
+                // Devuelve una respuesta HTTP 200 con los datos del usuario registrado.
+                return Ok(user);
+
+            }catch(Exception e){
+
+                if(e.Message == "user_exists"){
+                    return NotFound("Usuario ya existente.");
+                }
+                if(e.Message == "password_not_equals") {
+                    return Unauthorized("Las claves no son iguales");
+                }
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -29,13 +29,13 @@ namespace TallerWebM.src.Services.Implements
             _cloudinary = new Cloudinary(configuration["Cloudinary:Url"]);
         }
 
-        // <summary> 
+        // <summary>
         // Se sube una imagen al servicio de almacenamiento.
-        // </summary> 
+        // </summary>
         // <param name = "formFile"> El archivo de imagen a subir. </param>
         // <returns>  Resultado de la subida, incluyendo URL y estado. </returns>
         public async Task<ImageUploadResult> AddPhoto(IFormFile formFile)
-        {   
+        {
             // Resultado que se devolverá tras subir la imagen.
             var result = new ImageUploadResult();
 
@@ -55,7 +55,7 @@ namespace TallerWebM.src.Services.Implements
             await using var stream = formFile.OpenReadStream();
 
             // Se definen los parámetros para subir la imagen.
-            var parameters = new ImageUploadParams {    
+            var parameters = new ImageUploadParams {
                 // Se define el archivo.
                 File = new FileDescription(formFile.FileName, stream),
                 Transformation = new Transformation()
@@ -75,13 +75,13 @@ namespace TallerWebM.src.Services.Implements
             return await _cloudinary.UploadAsync(parameters);
         }
 
-        // <summary> 
+        // <summary>
         // Se elimina una imagen del servicio de almacenamiento mediante su ID.
-        // </summary> 
+        // </summary>
         // <param name = "id"> El ID de la imagen a eliminar. </param>
         // <returns>  Resultado de la eliminación. </returns>
         public async Task<DeletionResult> Delete(string id)
-        {   
+        {
             // Se definen los parámetros para eliminar la imagen.
             var parameters = new DeletionParams(id);
 

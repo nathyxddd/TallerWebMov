@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TallerWebM.src.DTOs
 {
-    
+
     /// <summary>
     /// Clase DTO (Data Transfer Object) usada para transferir datos de productos.
     /// </summary>

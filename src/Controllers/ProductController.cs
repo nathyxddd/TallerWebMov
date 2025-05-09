@@ -11,7 +11,7 @@ using TallerWebM.src.Services.Interface;
 
 namespace TallerWebM.src.Controllers
 {
-    // // Se define la ruta basa del controlador.
+    // Se define la ruta basa del controlador.
     [Route("api/[controller]")]
     [ApiController]
 
@@ -31,7 +31,7 @@ namespace TallerWebM.src.Controllers
             this.productService = productService;
         }
 
-    
+
         /// <summary>
         /// Método HTTP POST para agregar un nuevo producto al sistema.
         /// </summary>
@@ -60,7 +60,7 @@ namespace TallerWebM.src.Controllers
             }
         }
 
-        
+
         /// <summary>
         /// Método HTTP GET para obtener un producto por su ID.
         /// </summary>

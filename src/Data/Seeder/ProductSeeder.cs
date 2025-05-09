@@ -8,7 +8,6 @@ using TallerWebM.src.Models;
 
 namespace TallerWebM.src.Data.Seeder
 {
-    
     /// <summary>
     /// Clase que implementa la inserción de productos falsos en la base de datos, con inyecciones de dependencias para recibir el contexto de la base de datos.
     /// </summary>
@@ -53,7 +52,7 @@ namespace TallerWebM.src.Data.Seeder
             // Se generan 100 productos y se agregan a la base de datos.
             faker.Generate(100).ForEach(u => {
                 products.Add(u);
-                
+
             });
 
             // Se guardan los cambios en la base de datos.

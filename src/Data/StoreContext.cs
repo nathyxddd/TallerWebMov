@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TallerWebM.src.Data
 {
-    
+
     /// <summary>
     /// Esta clase hereda de DbContext, que es la clase base que gestiona la conexión y el mapeo entre C# y la base de datos.
     /// </summary>
@@ -24,7 +24,7 @@ namespace TallerWebM.src.Data
         /// Constructuro sin parámetros, útil en pruebas.
         /// </summary>
         public StoreContext(){}
-        
+
         /// <summary>
         /// Representa la tabla "Products" en la base de datos.
         /// </summary>
@@ -45,7 +45,7 @@ namespace TallerWebM.src.Data
         /// </summary>
         public required DbSet<ShippingAddress> ShippingAddresses {get; set;}
 
-        
+
         /// <summary>
         /// Se configuran las relaciones entre las entidades del modelo.
         /// </summary>
@@ -62,4 +62,4 @@ namespace TallerWebM.src.Data
     }
 
 }
-    
+

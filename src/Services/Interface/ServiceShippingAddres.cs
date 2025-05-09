@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace TallerWebM.src.Services.Interfaces.Auth
 {
-    // <summary> 
+    // <summary>
     // Se crea la interfaz para el servicio de dirección de envío.
-    // </summary> 
+    // </summary>
     public interface ServiceShippingAddres
     {
-        
+
     }
 }

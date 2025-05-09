@@ -11,7 +11,6 @@ namespace TallerWebM.src
     /// </summary>
     public interface IUserCreationMapper
     {
-        
         /// <summary>
         /// Método que toma un objeto UserDto como entrada y devuelve un objeto User, para convertir datos recibidos por el cliente.
         /// </summary>

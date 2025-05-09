@@ -23,7 +23,7 @@ try
         // Se habilita el registro de datos sensibles.
         options.EnableSensitiveDataLogging();
     });
-    
+
     // Se registran las dependencias necesarias para la inserción de datos.
     // Se inyecta la dependencia de UserSeeder en la aplicación.
     builder.Services.AddScoped<IUserSeeder,UserSeeder>();
@@ -64,7 +64,7 @@ try
 
     // Se ejecuta la inserción de datos de productos.
     ProductSeeder.Seed();
-    
+
 
 }
     // Mapea las rutas para los controladores de la aplicación.

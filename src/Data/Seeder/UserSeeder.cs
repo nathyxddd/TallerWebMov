@@ -10,7 +10,7 @@ using TallerWebM.src.Models;
 
 namespace TallerWebM.src.Data.Seeder
 {
-    
+
     /// <summary>
     /// Clase que implementa la interfaz IUserSeeder para insertar usuarios de prueba.
     /// </summary>
@@ -61,7 +61,7 @@ namespace TallerWebM.src.Data.Seeder
                     ZipCode = "3232"
                 }
             };
-        
+
             // Se agrega ese usuario a la base de datos.
             users.Add(user);
 
@@ -89,7 +89,7 @@ namespace TallerWebM.src.Data.Seeder
             storeContext.SaveChanges();
         }
 
-    
+
         /// <summary>
         /// Método para generar un número de teléfono chileno aleatorio que comienza con 9 y sigue con 8 dígitos.
         /// </summary>

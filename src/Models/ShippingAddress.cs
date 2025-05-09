@@ -20,25 +20,25 @@ namespace TallerWebM.src.Models
         /// </summary>
         public required string Street { get; set; } = string.Empty;
 
-        
+
         /// <summary>
         /// Núumero de la calle (por defecto 0) (obligatorio).
         /// </summary>
         public required int NumberStreet { get; set; } = 0;
 
-        
+
         /// <summary>
         /// Comuna o ciudad de la dirección (obligatoria).
         /// </summary>
         public required string Commune { get; set; } = string.Empty;
 
-        
+
         /// <summary>
         /// Región de la dirección (obligatoria).
         /// </summary>
         public required string Region { get; set; } = string.Empty;
 
-        
+
         /// <summary>
         /// Código postal de la dirección (obligatorio).
         /// </summary>

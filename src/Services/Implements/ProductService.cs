@@ -14,7 +14,7 @@ namespace TallerWebM.src.Services.Implements
     // </summary>
     public class ProductService : IProductService
     {
-        
+
         // Contexto de la base de datos que permite el acceso a todas las tablas.
         private readonly StoreContext storeContext;
 
@@ -24,9 +24,9 @@ namespace TallerWebM.src.Services.Implements
         // <summary>
         // Controlador que inicializa el servicio con el StoreContext y la tabla de productos.
         // </summary>
-        // <param name="storeContext"> El contexto de la base de datos. </param>        
-        // <param name="products"> La tabla de productos. </param>  
-        public ProductService(StoreContext storeContext, 
+        // <param name="storeContext"> El contexto de la base de datos. </param>
+        // <param name="products"> La tabla de productos. </param>
+        public ProductService(StoreContext storeContext,
         DbSet<Product> products) {
             this.storeContext = storeContext;
             this.products = products;
@@ -35,7 +35,7 @@ namespace TallerWebM.src.Services.Implements
         // <summary>
         // Se agrega un nuevo producto a la tabla de productos y se guardan los cambios.
         // </summary>
-        // <param name="product"> El producto que se desea agregar. </param>        
+        // <param name="product"> El producto que se desea agregar. </param>
         public void AddProduct(Product product)
         {
             // Se agrega el product al DbSet.
@@ -48,17 +48,17 @@ namespace TallerWebM.src.Services.Implements
         // <summary>
         // Se busca un producto por su ID.
         // </summary>
-        // <param name="id"> El ID del producto. </param>        
-        // <returns> El producto si se encuentra; de lo contrario, null. </returns>  
+        // <param name="id"> El ID del producto. </param>
+        // <returns> El producto si se encuentra; de lo contrario, null. </returns>
         public Product? GetProductId(int id)
         {
             // Usa EF Core para buscar.
            return products.Find(id);
         }
 
-        // <summary> 
+        // <summary>
         // Se obtiene un producto por su nombre.
-        // </summary> 
+        // </summary>
         // <param name = "product"> El nombre del producto. </param>
         // <returns>  El producto si se encuentra; de lo contrario, null. </returns>
         public Product? GetProductName(string name)
@@ -68,13 +68,13 @@ namespace TallerWebM.src.Services.Implements
             .First();
         }
 
-        // <summary> 
+        // <summary>
         // Se elimina un producto por su ID.
-        // </summary> 
+        // </summary>
         // <param name = "productId"> El ID del producto que se desea eliminar. </param>
         // <returns>  El producto eliminado. </returns>
         public Product RemoveProduct(int productId)
-        {   
+        {
             // Busca el producto por ID.
             var productSearched = GetProductId(productId);
 
@@ -90,9 +90,9 @@ namespace TallerWebM.src.Services.Implements
             return productSearched;
         }
 
-        // <summary> 
+        // <summary>
         // Se elimina un producto por su nombre.
-        // </summary> 
+        // </summary>
         // <param name = "name"> El nombre del producto a eliminar. </param>
         public void RemoveProductName(string name)
         {

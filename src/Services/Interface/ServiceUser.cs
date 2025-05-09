@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace TallerWebM.src.Services.Interfaces.Auth
 {
-    // <summary> 
+    // <summary>
     // Se crea la interfaz para el servicio de usuario.
-    // </summary> 
+    // </summary>
     public interface ServiceUser
     {
-        
+
     }
 }

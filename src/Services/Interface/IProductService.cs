@@ -6,9 +6,9 @@ using TallerWebM.src.Models;
 
 namespace TallerWebM.src.Services.Interface
 {
-    // <summary> 
+    // <summary>
     // Se crea la interfaz para el servicio de productos.
-    // </summary> 
+    // </summary>
     public interface IProductService
     {
         // <summary>
@@ -17,29 +17,29 @@ namespace TallerWebM.src.Services.Interface
         // <param name="product"> El producto que se desea agregar. </param>
         void AddProduct(Product product);
 
-        // <summary> 
+        // <summary>
         // Se elimina un producto por su ID.
-        // </summary> 
+        // </summary>
         // <param name = "productId"> El ID del producto que se desea eliminar. </param>
         // <returns>  El producto eliminado. </returns>
         Product RemoveProduct(int productId);
 
-        // <summary> 
+        // <summary>
         // Se elimina un producto por su nombre.
-        // </summary> 
+        // </summary>
         // <param name = "name"> El nombre del producto a eliminar. </param>
         void RemoveProductName(string name);
 
-        // <summary> 
+        // <summary>
         // Se busca un producto por su ID.
-        // </summary> 
+        // </summary>
         // <param name = "id"> El ID del producto. </param>
         // <returns>  El producto si se encuentra; de lo contrario, null. </returns>
         Product? GetProductId(int id);
 
-        // <summary> 
+        // <summary>
         // Se obtiene un producto por su nombre.
-        // </summary> 
+        // </summary>
         // <param name = "product"> El nombre del producto. </param>
         // <returns>  El producto si se encuentra; de lo contrario, null. </returns>
         Product? GetProductName(string name);
