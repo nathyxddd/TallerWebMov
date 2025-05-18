@@ -54,7 +54,7 @@ namespace TallerWebM.src.Models
         /// <summary>
         /// Galería de imágenes del producto.
         /// </summary>
-        public string []? Galery { get; set; } = [];
+        public string Galery { get; set; } = string.Empty;
 
         /// <summary>
         /// Fecha de la última actualización del producto (obligatoria).

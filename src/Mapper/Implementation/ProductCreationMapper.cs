@@ -4,7 +4,7 @@ using TallerWebM.src.Models;
 public class ProductCreationMapper : IProductCreationMapper
 {
 
-    public Product Mapper(ProductDto productDto)
+    public Product Mapper(ProductDto productDto, string images)
     {
         return new Product {
             Title = productDto.Title,
@@ -13,7 +13,8 @@ public class ProductCreationMapper : IProductCreationMapper
             Category = productDto.Category,
             Brand = productDto.Brand,
             Description = productDto.Description,
-            Stock = productDto.Stock
+            Stock = productDto.Stock,
+            Galery = images
         };
     }
 

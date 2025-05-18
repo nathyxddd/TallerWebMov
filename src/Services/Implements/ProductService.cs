@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.Data;
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
+using TallerWebM.src.Repository;
 using TallerWebM.src.Services.Interface;
 
 namespace TallerWebM.src.Services.Implements
@@ -16,13 +17,14 @@ namespace TallerWebM.src.Services.Implements
     public class ProductService : IProductService
     {
 
-        // Contexto de la base de datos que permite el acceso a todas las tablas.
-        private readonly StoreContext storeContext;
-
         // Tabla de productos, se accede como DbSet<Product>.
         private readonly DbSet<Product> products;
 
         private readonly IProductCreationMapper productCreationMapper;
+
+        private readonly IPhotoService photoService;
+
+        private readonly IProductRepository productRepository;
 
         // <summary>
         // Controlador que inicializa el servicio con el StoreContext y la tabla de productos.
@@ -30,26 +32,34 @@ namespace TallerWebM.src.Services.Implements
         // <param name="storeContext"> El contexto de la base de datos. </param>
         // <param name="products"> La tabla de productos. </param>
         public ProductService(StoreContext storeContext,
-        IProductCreationMapper productCreationMapper) {
-            this.storeContext = storeContext;
+        IProductCreationMapper productCreationMapper,
+        IPhotoService photoService,
+        IProductRepository productRepository) {
             this.products = storeContext.Products;
             this.productCreationMapper = productCreationMapper;
+            this.photoService = photoService;
+            this.productRepository = productRepository;
         }
 
         // <summary>
         // Se agrega un nuevo producto a la tabla de productos y se guardan los cambios.
         // </summary>
         // <param name="product"> El producto que se desea agregar. </param>
-        public ProductDto AddProduct(Product product)
+        public async Task<ProductDto> AddProduct(ProductDto product, List<IFormFile> images)
         {
-            // Se agrega el product al DbSet.
-            products.Add(product);
 
-            var dto = productCreationMapper.Mapper(product);
+            var urls = "";
+
+            foreach(var image in images) {
+               var result = await photoService.AddPhoto(image);
+               urls += result.Url.AbsoluteUri + " ";
+            }
+
+            var productCreated = productCreationMapper.Mapper(product, urls);
 
             // Se guardan los cambios en la base de datos.
-            storeContext.SaveChanges();
-            return dto;
+            productRepository.AddProduct(productCreated);
+            return product;
         }
 
         // <summary>
@@ -124,6 +134,54 @@ namespace TallerWebM.src.Services.Implements
 
             // Elimina el producto.
             products.Remove(productSearched);
+        }
+
+        public List<ProductDto> Search(int page, int? elements, string? category, int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending)
+        {
+
+
+
+           IEnumerable<Product> search = products;
+
+           if(category != null) {
+               search = products.Where(p => p.Category == category);
+           }
+
+           if(minRange != null && maxRange != null) {
+                search = products.Where(p => p.Price > minRange && p.Price <= maxRange);
+           }
+
+           if(state != null) {
+                search = products.Where(p => p.State != state);
+           }
+
+           if(brand != null) {
+                search = products.Where(p => p.Brand == brand);
+           }
+
+           if(isOrderedAscending != null) {
+                search = products.OrderBy(p => p.Price);
+            }
+
+            if(isOrderedDescending != null) {
+                search = products.OrderByDescending(p => p.Price);
+            } 
+
+            int total = 10;
+            if(elements != null) {
+                total = elements.Value;
+            }
+
+            search = products.Skip( (page - 1) * 10).Take(10);
+
+           var dtos = new List<ProductDto>();
+
+           var list = search.ToList();
+           foreach(var e in list) {
+               var productDto = productCreationMapper.Mapper(e);
+               dtos.Add(productDto);
+           }
+           return dtos;
         }
 
     }

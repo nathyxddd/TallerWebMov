@@ -46,9 +46,9 @@ namespace TallerWebM.src.Data.Seeder
 
             // Se crea un usuario específico de forma manual.
             User user = new User{
-                FullName = "zaex",
-                Email = "zaex@gmail.com",
-                PhoneNumber = "987878787",
+                FullName = "Ignacio Mancilla",
+                Email = "ignacio.mancilla@gmail.com",
+                PhoneNumber = "Pa$$word2025",
                 Birthdate = DateTime.Now,
                 RoleId = 1,
                 Password = BCrypt.Net.BCrypt.HashPassword("hola"),

@@ -16,7 +16,7 @@ namespace TallerWebM.src.Services.Interface
         // Se agrega un nuevo producto a la tabla de productos y se guardan los cambios.
         // </summary>
         // <param name="product"> El producto que se desea agregar. </param>
-        ProductDto AddProduct(Product product);
+        Task<ProductDto> AddProduct(ProductDto product, List<IFormFile> formFiles);
 
         // <summary>
         // Se elimina un producto por su ID.
@@ -44,6 +44,8 @@ namespace TallerWebM.src.Services.Interface
         // <param name = "product"> El nombre del producto. </param>
         // <returns>  El producto si se encuentra; de lo contrario, null. </returns>
         ProductDto? GetProductName(string name);
+
+        List<ProductDto> Search(int page, int? elements, string? category,int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending);
 
     }
 }
