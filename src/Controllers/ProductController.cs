@@ -40,10 +40,15 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto agregado. </returns>
         [HttpPost]
         [Route("/product/add")]
-        public ActionResult<ProductDto> Add([FromBody] Product product) {
-            try {
-                return productService.AddProduct(product);
-            } catch (Exception e) {
+        public async Task<ActionResult<ProductDto>> Add([FromForm] ProductDto product,
+        [FromForm] List<IFormFile> images)
+        {
+            try
+            {
+                return Ok(await productService.AddProduct(product, images));
+            }
+            catch (Exception e)
+            {
                 return BadRequest(e.Message);
             }
         }

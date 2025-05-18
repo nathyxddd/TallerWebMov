@@ -41,11 +41,13 @@ namespace TallerWebM.src.Models
         /// Contraseña del usuario (obligatoria).
         /// </summary>
         public required string Password {get; set;} = string.Empty;
-
+        
         /// <summary>
         /// ID del rol del usuario (por defecto 0).
         /// </summary>
-        public int RoleId {get; set; } = 0;
+        public int RoleId { get; set; } = 0;
+
+        public bool IsActive { get; set; } = true;
 
         /// <summary>
         /// Dirección de envío asociada al usuario.

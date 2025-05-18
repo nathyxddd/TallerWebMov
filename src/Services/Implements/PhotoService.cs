@@ -8,32 +8,37 @@ using TallerWebM.src.Services.Interface;
 
 namespace TallerWebM.src.Services.Implements
 {
-    // <summary>
-    // Se implementa la interfaz para el servicio de gestión de fotos.
-    // </summary>
+    /// <summary>
+    /// Se implementa la interfaz para el servicio de gestión de fotos.
+    /// </summary>
     public class PhotoService : IPhotoService
     {
-
-
+        /// <summary>
+        /// Proporciona acceso a la configuración de la aplicación
+        /// </summary>
         private readonly IConfiguration configuration;
 
-        // Instancia de Cloudinary para gestionar imágenes.
+        /// <summary>
+        /// Instancia de Cloudinary para gestionar imágenes.
+        /// </summary>
         private readonly Cloudinary _cloudinary;
+        
 
         /// <summary>
         /// Constructor del servicio que crea una instancia de Cloudinary.
         /// </summary>
         /// <param name="configuration"> Recibe una configuración. </param>
-        public PhotoService(IConfiguration configuration) {
+        public PhotoService(IConfiguration configuration)
+        {
             this.configuration = configuration;
             _cloudinary = new Cloudinary(configuration["Cloudinary:Url"]);
         }
 
-        // <summary>
-        // Se sube una imagen al servicio de almacenamiento.
-        // </summary>
-        // <param name = "formFile"> El archivo de imagen a subir. </param>
-        // <returns>  Resultado de la subida, incluyendo URL y estado. </returns>
+        /// <summary>
+        /// Se sube una imagen al servicio de almacenamiento.
+        /// </summary>
+        /// <param name = "formFile"> El archivo de imagen a subir. </param>
+        /// <returns>  Resultado de la subida, incluyendo URL y estado. </returns>
         public async Task<ImageUploadResult> AddPhoto(IFormFile formFile)
         {
             // Resultado que se devolverá tras subir la imagen.
@@ -75,11 +80,11 @@ namespace TallerWebM.src.Services.Implements
             return await _cloudinary.UploadAsync(parameters);
         }
 
-        // <summary>
-        // Se elimina una imagen del servicio de almacenamiento mediante su ID.
-        // </summary>
-        // <param name = "id"> El ID de la imagen a eliminar. </param>
-        // <returns>  Resultado de la eliminación. </returns>
+        /// <summary>
+        /// Se elimina una imagen del servicio de almacenamiento mediante su ID.
+        /// </summary>
+        /// <param name = "id"> El ID de la imagen a eliminar. </param>
+        /// <returns>  Resultado de la eliminación. </returns>
         public async Task<DeletionResult> Delete(string id)
         {
             // Se definen los parámetros para eliminar la imagen.
