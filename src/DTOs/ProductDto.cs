@@ -1,34 +1,30 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace TallerWebM.src.Models
+namespace TallerWebM.src.DTOs
 {
 
     /// <summary>
-    /// Clase que representa un producto dentro del sistema.
+    /// Clase DTO (Data Transfer Object) usada para transferir datos de productos.
     /// </summary>
-    public class Product
+    public class ProductDto
     {
         /// <summary>
-        /// ID del producto.
-        /// </summary>
-        public int Id { get; set; } = 0;
-
-        /// <summary>
-        /// Título con nombre del producto (obligatorio).
+        /// Título con el nombre del producto (obligatorio).
         /// </summary>
         public required string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Precio del producto (por defecto 0).
         /// </summary>
+        [Range(1, int.MaxValue, ErrorMessage = "El precio debe ser un valor positivo")]
         public decimal Price { get; set; } = 0;
 
         /// <summary>
         /// Cantidad de stock disponible (por defecto 0).
         /// </summary>
+        [Range(1, int.MaxValue, ErrorMessage = "El stock debe ser un valor positivo")]
         public int Stock { get; set; } = 0;
 
         /// <summary>
@@ -42,24 +38,16 @@ namespace TallerWebM.src.Models
         public required string Brand { get; set; } = string.Empty;
 
         /// <summary>
-        /// Descripción del producto (obligatorio).
+        /// Descripción del producto (obligatoria).
         /// </summary>
         public required string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Estado del producto, puede ser "nuevo" o "usado" (obligatorio).
         /// </summary>
+        [RegularExpression(@"^nuevo|usado")]
         public required string State { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Galería de imágenes del producto.
-        /// </summary>
-        public string Galery { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Fecha de la última actualización del producto (obligatoria).
-        /// </summary>
-        public DateTime LastUpdated { get; set; } = DateTime.Now;
-
     }
+
 }

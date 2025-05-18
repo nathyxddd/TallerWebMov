@@ -2,21 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace TallerWebM.src.Models
 {
 
     /// <summary>
-    /// Clase que representa a un usuario.
+    /// Clase DTO (Data Transfer Object) usada para transferir datos de un usuario.
     /// </summary>
-    public class User
+    public class UserDto
     {
-        /// <summary>
-        /// ID del usuario (por defecto 0).
-        /// </summary>
-        public int Id {get; set;} = 0;
-
         /// <summary>
         /// Nombre completo del usuario (obligatorio).
         /// </summary>
@@ -37,19 +32,15 @@ namespace TallerWebM.src.Models
         /// </summary>
         public required DateTime Birthdate {get; set;} = DateTime.Now;
 
+
         /// <summary>
         /// Contraseña del usuario (obligatoria).
         /// </summary>
         public required string Password {get; set;} = string.Empty;
 
         /// <summary>
-        /// ID del rol del usuario (por defecto 0).
+        /// Contraseña repetida del usuario (obligatoria).
         /// </summary>
-        public int RoleId {get; set; } = 0;
-
-        /// <summary>
-        /// Dirección de envío asociada al usuario.
-        /// </summary>
-        public ShippingAddress shippingAddress {get; set;}
+        public required string RepeatPassword {get; set;} = string.Empty;
     }
 }
