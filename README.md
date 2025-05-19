@@ -34,7 +34,7 @@ Asegúrate de tener instalado:
 
 ## 🚀 Construcción
 
-### 1️⃣ Clonar el Repositorio
+### 1.- Clonar el Repositorio
 
 Clonar el repositorio utilizando git
 
@@ -42,7 +42,7 @@ Clonar el repositorio utilizando git
   git clone https://github.com/nathyxddd/TallerWebMov
 ```
 
-### 2️⃣ Ir a la carpeta que contiene el proyecto
+### 2️.- Ir a la carpeta que contiene el proyecto
 
 ```bash
   cd TallerWebMov
@@ -50,19 +50,7 @@ Clonar el repositorio utilizando git
 
 ---
 
-### 4️⃣ Migraciones de Base de Datos
-
-Este comando generará un archivo de migración que define la estructura de la base de datos.
-
-1. **Aplicar las migraciones para crear la base de datos:**
-   Ejecuta el siguiente comando para aplicar la migración y crear la base de datos:
-   ```bash
-   dotnet ef database update
-   ```
-
----
-
-### 2 Ejecutar el Proyecto
+### 3.- Ejecutar el Proyecto
 
 Una vez completados los pasos anteriores, puedes iniciar el servidor localmente con el siguiente comando:
 

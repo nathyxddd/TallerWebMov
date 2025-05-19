@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -15,22 +16,26 @@ namespace TallerWebM.src.Models
         /// <summary>
         /// Nombre completo del usuario (obligatorio).
         /// </summary>
+        [Required]
         public required string FullName {get; set;} = string.Empty;
 
         /// <summary>
         /// Correo electrónico del usuario (obligatorio).
         /// </summary>
+        [Required]
         public required string Email {get; set;} = string.Empty;
 
         /// <summary>
         /// Número de teléfono del usuario (obligatorio).
         /// </summary>
+        [Required]
         public required string PhoneNumber {get; set;} = string.Empty;
 
         /// <summary>
         /// Fecha de nacimiento del usuario (obligatoria).
         /// </summary>
-        public required DateTime Birthdate {get; set;} = DateTime.Now;
+        [Required]
+        public required string Birthdate { get; set; } = "";
 
 
         /// <summary>

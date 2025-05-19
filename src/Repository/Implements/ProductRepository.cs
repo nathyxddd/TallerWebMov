@@ -32,7 +32,7 @@ public class ProductRepository : IProductRepository
     public void AddProduct(Product product)
     {
         products.Add(product);
-        storeContext.SaveChanges();
+        
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class ProductRepository : IProductRepository
     public void DeleteProduct(Product product)
     {
         products.Remove(product);
-        storeContext.SaveChanges();
+        
     }
 
     /// <summary>

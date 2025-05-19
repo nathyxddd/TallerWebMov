@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
+using TallerWebMov.src.DTOs;
 
 namespace TallerWebM.src.Services.Interface
 {
@@ -25,7 +26,7 @@ namespace TallerWebM.src.Services.Interface
         /// </summary>
         /// <param name = "productId"> El ID del producto que se desea eliminar. </param>
         /// <returns>  El producto eliminado. </returns>
-        Product RemoveProduct(int productId);
+        ProductDTOResponse? RemoveProduct(int productId);
 
         /// <summary>
         /// Elimina un producto según su nombre.
@@ -38,14 +39,14 @@ namespace TallerWebM.src.Services.Interface
         /// </summary>
         /// <param name = "id"> El ID del producto. </param>
         /// <returns>  El producto encontrado como DTO; de lo contrario, null. </returns>
-        ProductDto? GetProductId(int id);
+        ProductDTOResponse? GetProductId(int id);
 
         /// <summary>
         /// Se obtiene un producto por su nombre.
         /// </summary>
         /// <param name = "product"> El nombre del producto. </param>
         /// <returns>  El producto encontrado como DTO; de lo contrario, null. </returns>
-        ProductDto? GetProductName(string name);
+        ProductDTOResponse? GetProductName(string name);
 
         /// <summary>
         /// Se realiza una búsqueda avanzada de productos según los siguientes parametros:
@@ -60,7 +61,7 @@ namespace TallerWebM.src.Services.Interface
         /// <param name="isOrderedAscending"> Indica si los resultados deben estar ordenados ascendentemente. </param>
         /// <param name="isOrderedDescending"> Indica si los resultados deben estar ordenados descendentemente. </param>
         /// <returns> Una lista de productos que cumplen con los criterios especificados. </returns>
-        List<ProductDto> Search(int page, int? elements, string? category,int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending);
+        List<ProductDTOResponse> Search(int page, int? elements, string? category,int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending);
 
     }
 }

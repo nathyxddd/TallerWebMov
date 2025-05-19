@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Services.Interfaces.Auth;
 using TallerWebMov.src.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TallerWebM.src.Controllers
 {
@@ -35,7 +36,7 @@ namespace TallerWebM.src.Controllers
         /// Retorna un código 400 si ocurre otro error inesperado.
         /// </return>
         [HttpPost]
-        [Route("/api/login")]
+        [Route("/user/login")]
         public ActionResult<string> Login([FromBody] Credentials credentials)
         {
             try
@@ -78,7 +79,7 @@ namespace TallerWebM.src.Controllers
         /// <param name="userDto"> Objeto que contiene los datos del usuario a registrar. </param>
         /// <returns> El código 200 si el registro fue exitoso. </returns>
         [HttpPost]
-        [Route("/api/register")]
+        [Route("/user/register")]
         public ActionResult<UserDto> Register([FromBody] UserDto userDto)
         {
             try
@@ -104,14 +105,43 @@ namespace TallerWebM.src.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/user/get/{id}")]
+        [Authorize (Roles = "Admin")]
+        public ActionResult<UserDTOResponse> GetUser(int id)
+        {
+            try
+            {
+                return Ok(authenticationService.GetUser(id));
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "not_found")
+                {
+                    return NotFound("User not found");
+                }
+                else
+                {
+                    return NotFound(e.Message);
+                }
+
+            }
+        }
+
         /// <summary>
         /// Método HTTP PATCH para deshabilitar una cuenta de usuario.
         /// </summary>
         /// <param name="id"> El ID del usuario a deshabilitar. </param>
         /// <returns> Devuelve el usuario actualizado si la operación es exitosa, en caso contrario un error 404 si el usuario no se encuentra. </returns>
         [HttpPatch]
-        [Route("/api/disable-user/{id}")]
+        [Route("/user/disable/{id}")]
+        [Authorize (Roles = "Admin")]
         public ActionResult<UserDTOResponse> DisableUser(int id)
         {
             try
@@ -130,7 +160,8 @@ namespace TallerWebM.src.Controllers
         /// <param name="id"> El ID del usuario a habilitar. </param>
         /// <returns> Devuelve el usuario actualizado si la operación es exitosa, en caso contrario un error 404 si el usuario no se encuentra. </returns>
         [HttpPatch]
-        [Route("/api/enable-user/{id}")]
+        [Route("/user/enable/{id}")]
+        [Authorize (Roles = "Admin")]
         public ActionResult<UserDTOResponse> EnableUser(int id)
         {
             try
@@ -153,10 +184,10 @@ namespace TallerWebM.src.Controllers
         /// <param name="name"> El nombre del usuario. </param>
         /// <returns> Una lista de usuarios que cumplen con los filtros especificados. </returns>
         [HttpGet]
-        [Route("/api/search")]
-        public ActionResult<List<UserDTOResponse>> Search( [FromQuery] bool? state, [FromQuery]  string? firstDate, [FromQuery]  string? secondDate,  [FromQuery]  string? email, [FromQuery]  string? name)
+        [Route("/user/search")]
+        public ActionResult<List<UserDTOResponse>> Search(int page, [FromQuery] bool? state, [FromQuery]  string? firstDate, [FromQuery]  string? secondDate,  [FromQuery]  string? email, [FromQuery]  string? name)
         {
-            return authenticationService.Search(state, firstDate, secondDate, email, name);
+            return authenticationService.Search(page, state, firstDate, secondDate, email, name);
         }
 
     }

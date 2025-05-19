@@ -29,7 +29,8 @@ namespace TallerWebM.src.Mapper
                 Email = userDto.Email,
                 PhoneNumber = userDto.PhoneNumber,
                 Birthdate = userDto.Birthdate,
-                Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
+                RoleId = 1
             };
             // Se devuelve el objeto User creado.
             return creationUser;
@@ -49,7 +50,7 @@ namespace TallerWebM.src.Mapper
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Birthdate = user.Birthdate,
-                Password = user.Password
+                IsActive = user.IsActive
             };
         }
 

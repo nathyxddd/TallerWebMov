@@ -1,5 +1,6 @@
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
+using TallerWebMov.src.DTOs;
 
 public class ProductCreationMapper : IProductCreationMapper
 {
@@ -29,9 +30,14 @@ public class ProductCreationMapper : IProductCreationMapper
     /// </summary>
     /// <param name="product"> El objeto Product que se desea convertir. </param>
     /// <returns> Un objeto ProductDto con los datos mapeados desde el modelo. </returns>
-    public ProductDto Mapper(Product product)
+    public ProductDTOResponse Mapper(Product product)
     {
-        return new ProductDto
+        var galery = new List<string>();
+        foreach (var e in product.Galery.Trim().Split(" ")) {
+            galery.Add(e);
+        }
+
+        return new ProductDTOResponse
         {
             Title = product.Title,
             Price = product.Price,
@@ -39,7 +45,8 @@ public class ProductCreationMapper : IProductCreationMapper
             Category = product.Category,
             Brand = product.Brand,
             Description = product.Description,
-            State = product.State
+            State = product.State,
+            Galery = galery
         };
     }
 

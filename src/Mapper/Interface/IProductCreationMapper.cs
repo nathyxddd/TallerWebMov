@@ -1,5 +1,6 @@
 using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
+using TallerWebMov.src.DTOs;
 
 public interface IProductCreationMapper {
 
@@ -16,6 +17,6 @@ public interface IProductCreationMapper {
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
-    public ProductDto Mapper(Product product);
+    public ProductDTOResponse Mapper(Product product);
 
 }

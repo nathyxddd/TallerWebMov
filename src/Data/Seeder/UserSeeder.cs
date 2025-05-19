@@ -48,10 +48,10 @@ namespace TallerWebM.src.Data.Seeder
             User user = new User{
                 FullName = "Ignacio Mancilla",
                 Email = "ignacio.mancilla@gmail.com",
-                PhoneNumber = "Pa$$word2025",
-                Birthdate = DateTime.Now,
-                RoleId = 1,
-                Password = BCrypt.Net.BCrypt.HashPassword("hola"),
+                PhoneNumber = "03/03/2003",
+                Birthdate = "",
+                RoleId = 2,
+                Password = BCrypt.Net.BCrypt.HashPassword("Pa$$word2025"),
                 shippingAddress = new ShippingAddress{
                     Id = 20,
                     Street = "Antofa",
@@ -72,13 +72,13 @@ namespace TallerWebM.src.Data.Seeder
             // Email falso.
             .RuleFor(u => u.Email, f => f.Internet.Email())
             // Fecha de nacimiento (actual por ahora).
-            .RuleFor(u => u.Birthdate, f => DateTime.Now)
+            .RuleFor(u => u.Birthdate, f => "")
             // Contraseña encriptada.
             .RuleFor(u => u.Password, f => BCrypt.Net.BCrypt.HashPassword("Nathalia123"))
             // Número de teléfono aleatorio.
             .RuleFor(u => u.PhoneNumber, f => GeneratePhoneRandom())
             // Id 0, por ahora.
-            .RuleFor(u => u.RoleId, 0);
+            .RuleFor(u => u.RoleId, 1);
 
             // Se generan 100 usuarios falsos y se agregan a la base de datos.
             faker.Generate(100).ForEach(u => {

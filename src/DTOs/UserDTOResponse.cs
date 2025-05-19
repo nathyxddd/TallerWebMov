@@ -27,12 +27,11 @@ namespace TallerWebMov.src.DTOs
         /// <summary>
         /// Fecha de nacimiento del usuario (obligatoria).
         /// </summary>
-        public required DateTime Birthdate { get; set; } = DateTime.Now;
-
+        public required bool IsActive { get; set; } = true;
 
         /// <summary>
-        /// Contraseña del usuario (obligatoria).
+        /// Fecha de nacimiento del usuario (obligatoria).
         /// </summary>
-        public required string Password { get; set; } = string.Empty;
+        public required string Birthdate { get; set; } = "";
     }
 }

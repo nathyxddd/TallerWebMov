@@ -11,6 +11,8 @@ using System.Text;
 using TallerWebM.src.Repository;
 using TallerWebMov.src.Repository.Interfaces;
 using TallerWebMov.src.Repository.Implements;
+using TallerWebM.src;
+using TallerWebM.src.Mapper;
 
 // Configura un logger utilizando Serilog
 Log.Logger = new LoggerConfiguration()
@@ -44,7 +46,7 @@ try
         policy
             .WithOrigins(allowedOrigins)
             .AllowAnyHeader()
-            .WithMethods("GET", "POST", "PUT", "DELETE")
+            .WithMethods("GET", "POST", "PUT", "DELETE", "PATCH")
             .WithHeaders(
                   "Content-Type",     
                   "Authorization",    
@@ -68,8 +70,8 @@ try
     })
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
         };
     });
@@ -90,6 +92,8 @@ try
     builder.Services.AddScoped<IRolesRepository, RoleRepository>();
 
     builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+    builder.Services.AddScoped<IUserCreationMapper, UserCreationMapper>();
 
     builder.Services.AddScoped<IProductService, ProductService>();
 

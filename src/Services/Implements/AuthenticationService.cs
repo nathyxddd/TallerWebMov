@@ -62,10 +62,14 @@ namespace TallerWebM.src.Services.Implements
         /// <param name="storeContext"></param>
         public AuthenticationService(IRolesRepository rolesRepository,
         IUserRepository userRepository,
-        StoreContext storeContext)
+        StoreContext storeContext,
+        IUserCreationMapper userCreationMapper,
+        IConfiguration configuration)
         {
             this.rolesRepository = rolesRepository;
             this.userRepository = userRepository;
+            this.userCreationMappers = userCreationMapper;
+            this.configuration = configuration;
             users = storeContext.Users;
         }
 
@@ -91,7 +95,7 @@ namespace TallerWebM.src.Services.Implements
             }
 
             // Se obtiene el rol del usuario.
-            var role = rolesRepository.GetRole(user.Id);
+            var role = rolesRepository.GetRole(user.RoleId);
             if (role == null)
             {
                 throw new Exception("Role Not Found");
@@ -223,6 +227,7 @@ namespace TallerWebM.src.Services.Implements
 
             user.IsActive = false;
             userRepository.UpdateUser(user);
+            userRepository.Save();
             return userCreationMappers.Mapper(user);
         }
 
@@ -242,6 +247,7 @@ namespace TallerWebM.src.Services.Implements
 
             user.IsActive = true;
             userRepository.UpdateUser(user);
+            userRepository.Save();
             return userCreationMappers.Mapper(user);
         }
         
@@ -253,7 +259,12 @@ namespace TallerWebM.src.Services.Implements
         /// <exception cref="NotImplementedException"> Esta funcionalidad aún no está implementada. </exception>
         public UserDTOResponse GetUser(int userId)
         {
-            throw new NotImplementedException();
+            var user = userRepository.GetUser(userId);
+            if (user == null)
+            {
+                throw new Exception("not_found");
+            }
+            return userCreationMappers.Mapper(user);
         }
 
         /// <summary>
@@ -265,7 +276,7 @@ namespace TallerWebM.src.Services.Implements
         /// <param name="email"> Correo electrónico del usuario. </param>
         /// <param name="name"> Nombre del usuario. </param>
         /// <returns> Lista de usuarios que cumplen con los criterios de búsqueda.</returns>
-        public List<UserDTOResponse> Search(bool? state, string? firstDate, string? secondDate, string? email, string? name)
+        public List<UserDTOResponse> Search(int page, bool? state, string? firstDate, string? secondDate, string? email, string? name)
         {
             // Se emppieza con todos los usuarios.
             IEnumerable<User> search = users;
@@ -289,8 +300,19 @@ namespace TallerWebM.src.Services.Implements
                 search = search.Where(u => u.FullName == name);
             }
 
+            int total = 20;
+            search = search.Skip( (page - 1) * total).Take(total);
 
-            return null;
+            var dtos = new List<UserDTOResponse>();
+            var list = search.ToList();
+
+            foreach (var e in list)
+            {
+                var userDto = userCreationMappers.Mapper(e);
+                dtos.Add(userDto);
+            }
+
+            return dtos;
         }
 
     }

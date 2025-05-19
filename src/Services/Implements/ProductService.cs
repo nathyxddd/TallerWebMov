@@ -8,6 +8,7 @@ using TallerWebM.src.DTOs;
 using TallerWebM.src.Models;
 using TallerWebM.src.Repository;
 using TallerWebM.src.Services.Interface;
+using TallerWebMov.src.DTOs;
 
 namespace TallerWebM.src.Services.Implements
 {
@@ -73,7 +74,7 @@ namespace TallerWebM.src.Services.Implements
         /// </summary>
         /// <param name = "id"> El ID del producto. </param>
         /// <returns>  El producto encontrado como DTO; de lo contrario, null. </returns>
-        public ProductDto? GetProductId(int id)
+        public ProductDTOResponse? GetProductId(int id)
         {
             // Usa EF Core para buscar.
             var productFind = products.Find(id);
@@ -88,7 +89,7 @@ namespace TallerWebM.src.Services.Implements
         /// </summary>
         /// <param name = "product"> El nombre del producto. </param>
         /// <returns>  El producto encontrado como DTO; de lo contrario, null. </returns>
-        public ProductDto? GetProductName(string name)
+        public ProductDTOResponse? GetProductName(string name)
         {
             // Filtra productos por nombre y retorna el primero que coincide.
             var productFind = products.Where(p => p.Title == name)
@@ -106,21 +107,35 @@ namespace TallerWebM.src.Services.Implements
         /// </summary>
         /// <param name = "productId"> El ID del producto que se desea eliminar. </param>
         /// <returns>  El producto eliminado. </returns>
-        public Product RemoveProduct(int productId)
+        public ProductDTOResponse? RemoveProduct(int productId)
         {
             // Busca el producto por ID.
             var productSearched = products.Find(productId);
 
             // Si no existe, lanza una excepción.
-            if(productSearched == null) {
+            if (productSearched == null) {
                 throw new Exception("not_exists");
             }
 
+            if (productSearched.Galery != "")
+            {
+                var imagesUrl = productSearched.Galery.Trim().Split(" ");
+                foreach (var url in imagesUrl)
+                {
+                    var id = url.Split("blackcat/")[1];
+                    id = id.Replace(".jpg", "");
+                    id = "blackcat/" + id;
+                    photoService.Delete(id);
+                }
+            }
+            
+
             // Se elimina del DbSet.
-            products.Remove(productSearched);
+            productRepository.DeleteProduct(productSearched);
+            productRepository.Save();
 
             // Retorna el producto eliminado.
-            return productSearched;
+            return productCreationMapper.Mapper(productSearched);
         }
 
         /// <summary>
@@ -155,10 +170,8 @@ namespace TallerWebM.src.Services.Implements
         /// <param name="isOrderedAscending"></param>
         /// <param name="isOrderedDescending"></param>
         /// <returns> Una lista de productos que cumplen con los criterios especificados. </returns>
-        public List<ProductDto> Search(int page, int? elements, string? category, int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending)
+        public List<ProductDTOResponse> Search(int page, int? elements, string? category, int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending)
         {
-
-
 
             IEnumerable<Product> search = products;
 
@@ -200,7 +213,7 @@ namespace TallerWebM.src.Services.Implements
 
             search = products.Skip((page - 1) * 10).Take(10);
 
-            var dtos = new List<ProductDto>();
+            var dtos = new List<ProductDTOResponse>();
 
             var list = search.ToList();
             foreach (var e in list)

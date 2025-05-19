@@ -55,16 +55,18 @@ namespace TallerWebM.src.Services.Interfaces.Auth
         /// <returns> El objeto con los datos del usuario. </returns>
         public UserDTOResponse GetUser(int userId);
 
+       
         /// <summary>
         /// Se buscan usuarios filtrando por estado, fechas, correo electrónico y nombre.
         /// </summary>
+        /// <param name="page"></param>
         /// <param name="state"> Estado del usuario. </param>
         /// <param name="firstDate"> Fecha inicial del rango de búsqueda. </param>
         /// <param name="secondDate"> Fecha final del rango de búsqueda. </param>
         /// <param name="email"> Correo electrónico del usuario. </param>
         /// <param name="name"> Nombre del usuario. </param>
         /// <returns> Lista de usuarios que cumplen con los criterios de búsqueda.</returns>
-        public List<UserDTOResponse> Search(bool? state, string? firstDate, string? secondDate, string? email, string? name);
+        public List<UserDTOResponse> Search(int page, bool? state, string? firstDate, string? secondDate, string? email, string? name);
 
     }
 }

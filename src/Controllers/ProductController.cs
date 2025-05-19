@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TallerWebM.src.DTOs;
-using TallerWebM.src.Models;
 using TallerWebM.src.Services.Interface;
+using TallerWebMov.src.DTOs;
+
 
 namespace TallerWebM.src.Controllers
 {
@@ -28,7 +28,8 @@ namespace TallerWebM.src.Controllers
         /// Constructor que inicializa el controlador con el servicio de productos mediante inyección de dependencias.
         /// </summary>
         /// <param name="productService"> Servicio de productos inyectado. </param>
-        public ProductController(IProductService productService) {
+        public ProductController(IProductService productService)
+        {
             this.productService = productService;
         }
 
@@ -40,7 +41,8 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto agregado. </returns>
         [HttpPost]
         [Route("/product/add")]
-        public async Task<ActionResult<ProductDto>> Add([FromForm] ProductDto product,
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ProductDTOResponse>> Add([FromForm] ProductDto product,
         [FromForm] List<IFormFile> images)
         {
             try
@@ -60,13 +62,18 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto eliminado si existe, o un mensaje de error si no se encuentra. </returns>
         [HttpDelete]
         [Route("/product/remove/{id}")]
-        public ActionResult<ProductDto> Remove(int id) {
-            try {
+        [Authorize(Roles = "Admin")]
+        public ActionResult<ProductDTOResponse> Remove(int id)
+        {
+            try
+            {
                 // Se llama al servicio para eliminar el producto.
                 return Ok(productService.RemoveProduct(id));
-            } catch (Exception) {
+            }
+            catch (Exception e)
+            {
                 // Si ocurre un error y no se encuentra el producto, se devuelve un código 404: Recurso no encontrado.
-                return NotFound("Producto no encontrado");
+                return NotFound("Producto no encontrado: " + e.Message);
             }
         }
 
@@ -78,16 +85,25 @@ namespace TallerWebM.src.Controllers
         /// <returns> El producto encontrado o un mensaje de error si no existe. </returns>
         [HttpGet]
         [Route("/product/get/{id}")]
-        public ActionResult<ProductDto> Get(int id) {
+        public ActionResult<ProductDTOResponse> Get(int id)
+        {
             try
             {
                 // Se llama al servicio para obtener un producto por ID.
                 return Ok(productService.GetProductId(id));
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 // Si ocurre un error y no se encuentra el producto, se devuelve un código 404: Recurso no encontrado.
                 return NotFound("Producto no encontrado");
             }
+        }
+        
+        [HttpGet]
+        [Route("/product/search")]
+        public ActionResult<List<ProductDTOResponse>> Search(int page, int? elements, string? category, int? minRange, int? maxRange, string? state, string? brand, bool? isOrderedAscending, bool? isOrderedDescending)
+        {
+            return Ok(productService.Search(page, elements, category, minRange, maxRange, state, brand, isOrderedAscending, isOrderedDescending));
         }
 
     }
